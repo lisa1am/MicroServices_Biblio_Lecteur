@@ -33,17 +33,19 @@ public class LecteurController {
     }
 
     @DeleteMapping("lecteurs/idf/{idf}")
-    public String deleteById(@PathVariable Long idf){
+    public boolean deleteById(@PathVariable Long idf){
         repository.deleteById(idf);
-        return "Le lecteur ayant l'idf "+idf+" a été supprimé de la base de données";
+        System.out.println("Le lecteur ayant l'idf "+idf+" a été supprimé de la base de données");
+        return true;
     }
 
 
     //HEADER : 'Content-type: application/json'
     @PutMapping("lecteurs/idf/{idf}")
-    public String updateLecteur(@RequestBody Lecteur lecteur, @PathVariable Long idf) {
+    public boolean updateLecteur(@RequestBody Lecteur lecteur, @PathVariable Long idf) {
         if (!repository.existsById(idf)){
-            return "Le lecteur n'existe pas dans la base de données !";
+            System.out.println("Le lecteur n'existe pas dans la base de données !");
+            return false;
         }else{
             Lecteur lecteurEnBase = repository.findByIdf(idf);
             if(lecteur.getGenre() == null){
@@ -62,17 +64,21 @@ public class LecteurController {
                 lecteur.setAdresse(lecteurEnBase.getAdresse());
             }
             repository.save(lecteur);
-            return "Le lecteur ayant l'idf "+idf+" a été mis à jour avec succès";
+            System.out.println("Le lecteur ayant l'idf "+idf+" a été mis à jour avec succès");
+            return true;
         }
 
     }
 
     @PostMapping("lecteurs/")
-    public String addLecteur(@RequestBody Lecteur lecteur){
-        if (repository.existsById(lecteur.getIdf()))
-            return "Le lecteur existe déjà dans la base de données !";
+    public boolean addLecteur(@RequestBody Lecteur lecteur){
+        if (repository.existsById(lecteur.getIdf())) {
+            System.out.println("Le lecteur existe déjà dans la base de données !");
+            return false;
+        }
 
         repository.save(lecteur);
-        return "Le lecteur a été enregistré avec succès";
+        System.out.println("Le lecteur a été enregistré avec succès");
+        return true;
     }
 }
