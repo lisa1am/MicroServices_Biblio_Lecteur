@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Lecteur {
 
     @Id
-    private Long id;
+    private Long idf;
 
     @Column(name="genre")
     private String genre;
@@ -29,8 +29,8 @@ public class Lecteur {
 
     public Lecteur(){}
 
-    public Lecteur(Long id, String genre, String nom, String prenom, String adresse, Date date_naissance){
-        this.id=id;
+    public Lecteur(Long idf, String genre, String nom, String prenom, String adresse, Date date_naissance){
+        this.idf=idf;
         this.genre=genre;
         this.nom=nom;
         this.prenom=prenom;
@@ -44,21 +44,21 @@ public class Lecteur {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lecteur lecteur = (Lecteur) o;
-        return id.equals(lecteur.id);
+        return idf.equals(lecteur.idf);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(idf);
     }
 
 
-    public Long getId() {
-        return id;
+    public Long getIdf() {
+        return idf;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdf(Long idf) {
+        this.idf = idf;
     }
 
     public String getGenre() {

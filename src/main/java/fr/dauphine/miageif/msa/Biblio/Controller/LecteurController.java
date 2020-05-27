@@ -8,6 +8,7 @@ import fr.dauphine.miageif.msa.Biblio.Repository.LecteurRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Transactional
@@ -19,9 +20,9 @@ public class LecteurController {
     @Autowired
     private LecteurRepository repository;
 
-    @GetMapping("lecteurs/id/{id}")
-    public Lecteur findById(@PathVariable String id){
-        Lecteur lecteur = repository.findById(id);
+    @GetMapping("lecteurs/idf/{idf}")
+    public Lecteur findById(@PathVariable Long idf){
+        Lecteur lecteur = repository.findByIdf(idf);
         return lecteur;
     }
 
@@ -31,20 +32,20 @@ public class LecteurController {
         return lecteurs;
     }
 
-    @DeleteMapping("lecteurs/id/{id}")
-    public String deleteByIsbn(@PathVariable String id){
-        repository.deleteById(id);
-        return "Le lecteur ayant l'id "+id+" a été supprimé de la base de données";
+    @DeleteMapping("lecteurs/idf/{idf}")
+    public String deleteById(@PathVariable Long idf){
+        repository.deleteById(idf);
+        return "Le lecteur ayant l'idf "+idf+" a été supprimé de la base de données";
     }
 
 
     //HEADER : 'Content-type: application/json'
-    @PutMapping("lecteurs/id/{id}")
-    public String updateLivre(@RequestBody Lecteur lecteur, @PathVariable String id) {
-        if (!repository.existsById(id)){
+    @PutMapping("lecteurs/idf/{idf}")
+    public String updateLecteur(@RequestBody Lecteur lecteur, @PathVariable Long idf) {
+        if (!repository.existsById(idf)){
             return "Le lecteur n'existe pas dans la base de données !";
         }else{
-            Lecteur lecteurEnBase = repository.findById(id);
+            Lecteur lecteurEnBase = repository.findByIdf(idf);
             if(lecteur.getGenre() == null){
                 lecteur.setGenre(lecteurEnBase.getGenre());
             }
@@ -61,14 +62,14 @@ public class LecteurController {
                 lecteur.setAdresse(lecteurEnBase.getAdresse());
             }
             repository.save(lecteur);
-            return "Le lecteur ayant l'Id "+id+" a été mis à jour avec succès";
+            return "Le lecteur ayant l'idf "+idf+" a été mis à jour avec succès";
         }
 
     }
 
     @PostMapping("lecteurs/")
     public String addLecteur(@RequestBody Lecteur lecteur){
-        if (repository.existsById(lecteur.getId()))
+        if (repository.existsById(lecteur.getIdf()))
             return "Le lecteur existe déjà dans la base de données !";
 
         repository.save(lecteur);
