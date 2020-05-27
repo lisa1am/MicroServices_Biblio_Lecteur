@@ -3,86 +3,101 @@ package fr.dauphine.miageif.msa.Biblio;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
 public class Lecteur {
 
     @Id
-    private String isbn;
+    private String id;
 
-    @Column(name="auteur")
-    private String auteur;
+    @Column(name="genre")
+    private String genre;
 
-    @Column(name="titre")
-    private String titre;
+    @Column(name="nom")
+    private String nom;
 
-    @Column(name="editeur")
-    private String editeur;
+    @Column(name="prenom")
+    private String prenom;
 
-    @Column(name="edition")
-    private Long edition;
+    @Column(name="adresse")
+    private String adresse;
+
+    @Column(name="date_naissance")
+    private Date date_naissance;
 
     public Lecteur(){}
 
-    public Lecteur(String isbn, String auteur, String titre, String editeur, Long edition){
-        this.isbn=isbn;
-        this.auteur=auteur;
-        this.titre=titre;
-        this.editeur=editeur;
-        this.edition=edition;
+    public Lecteur(String id, String genre, String nom, String prenom, String adresse, Date date_naissance){
+        this.id=id;
+        this.genre=genre;
+        this.nom=nom;
+        this.prenom=prenom;
+        this.adresse=adresse;
+        this.date_naissance=date_naissance;
+
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Lecteur livre = (Lecteur) o;
-        return isbn.equals(livre.isbn);
+        Lecteur lecteur = (Lecteur) o;
+        return id.equals(lecteur.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn);
+        return Objects.hash(id);
     }
 
-    public String getIsbn() {
-        return isbn;
+
+    public String getId() {
+        return id;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getAuteur() {
-        return auteur;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setAuteur(String auteur) {
-        this.auteur = auteur;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
-    public String getTitre() {
-        return titre;
+    public String getNom() {
+        return nom;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public String getEditeur() {
-        return editeur;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setEditeur(String editeur) {
-        this.editeur = editeur;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
-    public Long getEdition() {
-        return edition;
+    public String getAdresse() {
+        return adresse;
     }
 
-    public void setEdition(Long edition) {
-        this.edition = edition;
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public Date getDate_naissance() {
+        return date_naissance;
+    }
+
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
     }
 }

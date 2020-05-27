@@ -19,61 +19,59 @@ public class LecteurController {
     @Autowired
     private LecteurRepository repository;
 
-    @GetMapping("livres/isbn/{isbn}")
-    public Lecteur findByIsbn(@PathVariable String isbn){
-        Lecteur livre = repository.findByIsbn(isbn);
-        return livre;
+    @GetMapping("lecteurs/id/{id}")
+    public Lecteur findById(@PathVariable String id){
+        Lecteur lecteur = repository.findById(id);
+        return lecteur;
     }
 
-    @GetMapping("livres/auteur/{auteur}")
-    public List<Lecteur> findByAuteur(@PathVariable String auteur){
-        List<Lecteur> livres = repository.findAllByAuteur(auteur);
-        return livres;
+    @GetMapping("lecteurs/nom/{nom}")
+    public List<Lecteur> findByNomPrenom(@PathVariable String nom){
+        List<Lecteur> lecteurs = repository.findAllByNom(nom);
+        return lecteurs;
     }
 
-    @DeleteMapping("livres/isbn/{isbn}")
-    public String deleteByIsbn(@PathVariable String isbn){
-        repository.deleteByIsbn(isbn);
-        return "Le livre ayant l'ISBN "+isbn+" a été supprimé de la base de données";
+    @DeleteMapping("lecteurs/id/{id}")
+    public String deleteByIsbn(@PathVariable String id){
+        repository.deleteById(id);
+        return "Le lecteur ayant l'id "+id+" a été supprimé de la base de données";
     }
 
 
     //HEADER : 'Content-type: application/json'
-    @PutMapping("livres/isbn/{isbn}")
-    public String updateLivre(@RequestBody Lecteur livre, @PathVariable String isbn) {
-        if (!repository.existsByIsbn(isbn)){
-            return "Le livre n'existe pas dans la base de données !";
+    @PutMapping("lecteurs/id/{id}")
+    public String updateLivre(@RequestBody Lecteur lecteur, @PathVariable String id) {
+        if (!repository.existsById(id)){
+            return "Le lecteur n'existe pas dans la base de données !";
         }else{
-            Lecteur livreEnBase = repository.findByIsbn(isbn);
-            if(livre.getAuteur() == null){
-                livre.setAuteur(livreEnBase.getAuteur());
+            Lecteur lecteurEnBase = repository.findById(id);
+            if(lecteur.getGenre() == null){
+                lecteur.setGenre(lecteurEnBase.getGenre());
             }
-            if(livre.getEditeur() == null){
-                livre.setEditeur(livreEnBase.getEditeur());
+            if(lecteur.getNom() == null){
+                lecteur.setNom(lecteurEnBase.getNom());
             }
-            if(livre.getEdition() == null){
-                livre.setEdition(livreEnBase.getEdition());
+            if(lecteur.getPrenom() == null){
+                lecteur.setPrenom(lecteurEnBase.getPrenom());
             }
-            if(livre.getTitre() == null){
-                livre.setTitre(livreEnBase.getTitre());
+            if(lecteur.getDate_naissance() == null){
+                lecteur.setDate_naissance(lecteurEnBase.getDate_naissance());
             }
-            repository.save(livre);
-            return "Le livre ayant l'ISBN "+isbn+" a été mis à jour avec succès";
+            if(lecteur.getAdresse() == null){
+                lecteur.setAdresse(lecteurEnBase.getAdresse());
+            }
+            repository.save(lecteur);
+            return "Le lecteur ayant l'Id "+id+" a été mis à jour avec succès";
         }
 
-
-
-
     }
 
-    @PostMapping("livres/")
-    public String addLivre(@RequestBody Lecteur livre){
-        if (repository.existsByIsbn(livre.getIsbn()))
-            return "Le livre existe déjà dans la base de données !";
+    @PostMapping("lecteurs/")
+    public String addLecteur(@RequestBody Lecteur lecteur){
+        if (repository.existsById(lecteur.getId()))
+            return "Le lecteur existe déjà dans la base de données !";
 
-        repository.save(livre);
-        return "Le livre a été enregistré avec succès";
+        repository.save(lecteur);
+        return "Le lecteur a été enregistré avec succès";
     }
-
-
 }

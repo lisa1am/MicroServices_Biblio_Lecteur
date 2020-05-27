@@ -6,14 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface LecteurRepository extends JpaRepository<Lecteur, Long> {
-    Lecteur findByIsbn(String isbn);
+    Lecteur findById(String id);
 
-    List<Lecteur> findAllByAuteur(String Auteur);
+    List<Lecteur> findAllByNom(String Nom);
 
-    void deleteByIsbn(String isbn);
+    void deleteById(String id);
 
-    boolean existsByIsbn(String isbn);
-
+    boolean existsById(String id);
 
 
 }
