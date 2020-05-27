@@ -1,33 +1,33 @@
 package fr.dauphine.miageif.msa.Biblio.Controller;
 
-import fr.dauphine.miageif.msa.Biblio.Pret;
+import fr.dauphine.miageif.msa.Biblio.Lecteur;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import fr.dauphine.miageif.msa.Biblio.Repository.PretRepository;
+import fr.dauphine.miageif.msa.Biblio.Repository.LecteurRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
 @Transactional
-public class PretController {
+public class LecteurController {
 
     @Autowired
     private Environment environment;
 
     @Autowired
-    private PretRepository repository;
+    private LecteurRepository repository;
 
     @GetMapping("livres/isbn/{isbn}")
-    public Pret findByIsbn(@PathVariable String isbn){
-        Pret livre = repository.findByIsbn(isbn);
+    public Lecteur findByIsbn(@PathVariable String isbn){
+        Lecteur livre = repository.findByIsbn(isbn);
         return livre;
     }
 
     @GetMapping("livres/auteur/{auteur}")
-    public List<Pret> findByAuteur(@PathVariable String auteur){
-        List<Pret> livres = repository.findAllByAuteur(auteur);
+    public List<Lecteur> findByAuteur(@PathVariable String auteur){
+        List<Lecteur> livres = repository.findAllByAuteur(auteur);
         return livres;
     }
 
@@ -40,11 +40,11 @@ public class PretController {
 
     //HEADER : 'Content-type: application/json'
     @PutMapping("livres/isbn/{isbn}")
-    public String updateLivre(@RequestBody Pret livre, @PathVariable String isbn) {
+    public String updateLivre(@RequestBody Lecteur livre, @PathVariable String isbn) {
         if (!repository.existsByIsbn(isbn)){
             return "Le livre n'existe pas dans la base de données !";
         }else{
-            Pret livreEnBase = repository.findByIsbn(isbn);
+            Lecteur livreEnBase = repository.findByIsbn(isbn);
             if(livre.getAuteur() == null){
                 livre.setAuteur(livreEnBase.getAuteur());
             }
@@ -67,7 +67,7 @@ public class PretController {
     }
 
     @PostMapping("livres/")
-    public String addLivre(@RequestBody Pret livre){
+    public String addLivre(@RequestBody Lecteur livre){
         if (repository.existsByIsbn(livre.getIsbn()))
             return "Le livre existe déjà dans la base de données !";
 

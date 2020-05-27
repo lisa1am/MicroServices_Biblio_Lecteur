@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Pret {
+public class Lecteur {
 
     @Id
     private String isbn;
@@ -23,9 +23,9 @@ public class Pret {
     @Column(name="edition")
     private Long edition;
 
-    public Pret(){}
+    public Lecteur(){}
 
-    public Pret(String isbn, String auteur, String titre, String editeur, Long edition){
+    public Lecteur(String isbn, String auteur, String titre, String editeur, Long edition){
         this.isbn=isbn;
         this.auteur=auteur;
         this.titre=titre;
@@ -37,7 +37,7 @@ public class Pret {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pret livre = (Pret) o;
+        Lecteur livre = (Lecteur) o;
         return isbn.equals(livre.isbn);
     }
 
