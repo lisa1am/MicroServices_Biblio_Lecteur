@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Lecteur {
 
     @Id
-    private String id;
+    private Long id;
 
     @Column(name="genre")
     private String genre;
@@ -29,7 +29,7 @@ public class Lecteur {
 
     public Lecteur(){}
 
-    public Lecteur(String id, String genre, String nom, String prenom, String adresse, Date date_naissance){
+    public Lecteur(Long id, String genre, String nom, String prenom, String adresse, Date date_naissance){
         this.id=id;
         this.genre=genre;
         this.nom=nom;
@@ -53,11 +53,11 @@ public class Lecteur {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
